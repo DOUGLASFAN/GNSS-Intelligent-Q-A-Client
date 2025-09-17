@@ -94,3 +94,101 @@ make (或 mingw32-make、nmake，取决于编译器)
 - 确保本地AI服务正确运行在127.0.0.1:8000端口
 - 如果网络请求失败，应用程序会显示错误信息
 - 程序支持基本的中文显示，但确保您的Qt环境配置了正确的字体
+
+
+# GNSS Intelligent Q&A Client
+
+This is a GNSS (Global Navigation Satellite System) intelligent question and answer client application developed based on Qt. It allows users to interact with a locally deployed AI service to get answers to GNSS-related questions.
+
+## Project Overview
+
+The application provides a clean user interface where users can input questions about GNSS. The system sends the questions to the locally running AI service and displays the answer results in a streaming manner. The application supportsapplication supports conversation history to make interactions more natural and coherent.
+
+## Technology Stack
+
+- C++
+- Qt 6 Framework
+  - Qt Core
+  - Qt GUI
+  - Qt Widgets
+  - Qt Network
+
+## Project Structure
+
+```
+├── main.cpp                # Application entry point
+├── mainwindow.h/.cpp       # Main window class definition and implementation
+├── networkclient.h/.cpp    # Network client class definition and implementation
+├── mainwindow.ui           # UI design file
+├── nmeaCharAI.pro          # Qt project file
+└── README.md               # Project documentation
+```
+
+## Core Features
+
+1. **User Interface**: Clean Q&A interface including question input box, question button, and answer display area
+2. **Network Communication**: HTTP communication with AI service on local port 8000
+3. **Streaming Display**: Answer content displayed with typewriter effect to enhance user experience
+4. **Conversation History History**: Saves conversation context to support continuous Q&A
+
+## Building and Running
+
+### Prerequisites
+
+- Qt 6 development environment installed
+- MSVC 2022 compiler (or other compatible C++ compiler) installed
+- Locally deployed and running AI service (listening on 127.0.0.1:8000)
+
+### Building with Qt Creator
+
+1. Open Qt Creator
+2. Select "File" -> "Open File or Project"
+3. Choose the `nmeaCharAI.pro` file in the project directory
+4. Select a build kit (recommended: Desktop Qt 6.x.x MSVC 64bit)
+5. Click "Build" -> "Build Project 'nmeaCharAI'"
+6. After successful build, click the "Run" button to launch the application
+
+### Command Line Build
+
+```bash
+# Execute in the project directory
+qmake
+make (or mingw32-make, nmake, depending on your compiler)
+```
+
+## Usage Instructions
+
+1. Ensure the local AI service is started and listening on port 8000
+2. Launch the GNSS Intelligent Q&A Client application
+3. Enter your question in the question input box
+4. Click the "Ask" button to send the question
+5. Wait for the AI answer, which will be displayed in a streaming manner in the answer area
+6. You can continue asking questions as the application retains conversation history
+
+## Network Request Format
+
+Request format sent by client to server:
+
+```json
+{
+  "conversation": [
+    {"role": "user", "content": "Question content"},
+    {"role": "assistant", "content": "Historical answer"}
+    // ...more conversation history
+  ]
+}
+```
+
+Response format returned by server:
+
+```json
+{
+  "answer": "AI's answer content"
+}
+```
+
+## Notes
+
+- Ensure the local AI service is running correctly on 127.0.0.1:8000
+- If network requests fail, the application will display error messages
+- The program supports basic Chinese display, but ensure your Qt environment is configured with appropriate fonts
